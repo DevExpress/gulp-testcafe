@@ -1,4 +1,6 @@
 # gulp-testcafe
+[![Build status](https://ci.appveyor.com/api/projects/status/gvjohww3gs65m36j?svg=true)](https://ci.appveyor.com/project/DevExpress/gulp-testcafe)
+
 *Run TestCafe tests using Gulp.*
 
 ## Install
