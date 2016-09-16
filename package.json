@@ -1,0 +1,60 @@
+{
+  "name": "gulp-testcafe",
+  "version": "1.0.0",
+  "description": "Run TestCafe tests using Gulp.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "eslint lib test && mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevExpress/gulp-testcafe.git"
+  },
+  "keywords": [
+    "gulp",
+    "testcafe",
+    "automated",
+    "functional",
+    "browser",
+    "browsers",
+    "website",
+    "webapp",
+    "testing",
+    "automation",
+    "test",
+    "runner",
+    "tdd",
+    "assert",
+    "tests",
+    "assertion",
+    "QA",
+    "ES6",
+    "ES2015",
+    "async",
+    "await"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "author": {
+    "name": "Developer Express Inc.",
+    "url": "https://www.devexpress.com/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DevExpress/gulp-testcafe/issues"
+  },
+  "homepage": "https://github.com/DevExpress/gulp-testcafe#readme",
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "testcafe": "^0.3.1-alpha",
+    "through2": "^2.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.5.0",
+    "mocha": "^3.0.2"
+  }
+}
