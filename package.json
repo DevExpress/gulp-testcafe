@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "eslint lib test && mocha"
+    "test": "eslint lib test && mocha",
+    "publish-please": "publish-please",
+    "prepublish": "publish-please guard"
   },
   "repository": {
     "type": "git",
@@ -55,6 +57,7 @@
   },
   "devDependencies": {
     "eslint": "^3.5.0",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "publish-please": "^2.2.0"
   }
 }
