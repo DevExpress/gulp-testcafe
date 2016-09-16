@@ -1,7 +1,6 @@
 var expect         = require('chai').expect;
 var vinylFile      = require('vinyl-file');
 var gulpTestCafe   = require('../');
-var WritableStream = require('stream').Writable;
 
 function createReportOutStream () {
     return {
