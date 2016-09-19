@@ -4,8 +4,8 @@ var PluginError    = require('gulp-util').PluginError;
 var through        = require('through2');
 
 var DEFAULT_OPTS = {
-    filter:                null,
     browsers:              [],
+    filter:                null,
     screenshotsPath:       null,
     takeScreenshotsOnFail: false,
     reporter:              'spec',
