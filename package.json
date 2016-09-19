@@ -60,6 +60,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.5.0",
     "mocha": "^3.0.2",
+    "promisify-event": "^1.0.0",
     "publish-please": "^2.2.0",
     "vinyl-file": "^2.0.0"
   }
