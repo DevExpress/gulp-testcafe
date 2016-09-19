@@ -1,1 +1,2 @@
 test/fixtures/**/*.js
+test/manual/node_modules/**/*.js
