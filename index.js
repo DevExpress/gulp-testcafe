@@ -36,10 +36,13 @@ module.exports = function gulpTestCafe (opts) {
     }
 
     function onStreamEnd (cb) {
-        var stream = this;
+        var stream   = this;
+        var testcafe = null;
 
         createTestCafe()
-            .then(function (testcafe) {
+            .then(function (tc) {
+                testcafe = tc;
+
                 var runner = testcafe.createRunner();
 
                 return runner
@@ -49,26 +52,21 @@ module.exports = function gulpTestCafe (opts) {
                     .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail)
                     .reporter(opts.reporter, opts.reportOutStream)
                     .run(opts);
-
             })
             .then(function (failed) {
-                if (failed > 0) {
-                    var err = new PluginError('gulp-testcafe', failed + ' test(s) failed.', {
-                        showStack: false
-                    });
-
-                    stream.emit('error', err);
-                }
+                if (failed > 0)
+                    stream.emit('error', new PluginError('gulp-testcafe', { message: failed + ' test(s) failed.' }));
 
                 // NOTE: for testing purposes
                 else
                     stream.emit('done');
             })
             .catch(function (err) {
-                stream.emit('error', new PluginError('gulp-testcafe', err, {
-                    stack:     err.stack,
-                    showStack: true
-                }));
+                stream.emit('error', new PluginError('gulp-testcafe', { message: err.message }));
+            })
+            .then(function () {
+                if (testcafe)
+                    return testcafe.close();
             })
             .then(cb);
     }
