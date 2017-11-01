@@ -39,16 +39,33 @@ testcafe(options)
 
 Configures the test runner to run tests in the specified browsers.
 
-#### reporter
+#### reporters
 
-*Type*: `String`
+*Type*: `String` || `Array`
 
 *Default*: `spec`
 
 *Details*: [Reporters](https://devexpress.github.io/testcafe/documentation/using-testcafe/common-concepts/reporters.html)
 
-Specifies the reporter.
+Specifies the reporter or an array of reporters. 
 
+Reporter can be specified by reporter name, or an object with following properties: 
+
+ * `name` - name of the reporter,
+ * `factoryFunction` - a function that creates reporter instance. The `name` will be ignored if `factoryFunction` is specified,
+ * `file` - the path to a file where reporter's output will be redirected, 
+ * `outStream` - an Writable Stream instance where reporter's output will be piped. The `file` property will be ignored if `outStream` is specified.
+
+Examples:
+```js
+  "reporters": "minimal"
+```
+```js
+   "reporters": { "name": "json", "file": "report.json" }
+ ```
+```js
+    "reporters": { "name": "xunit", "outStream": fs.createWriteStream("report.xml") }
+```
 #### filter
 
 *Type*: `function(testName, fixtureName, fixturePath)`

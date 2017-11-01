@@ -53,6 +53,7 @@
   "dependencies": {
     "gulp-util": "^3.0.7",
     "lodash.defaults": "^4.2.0",
+    "lodash.flatten": "^4.4.0",
     "testcafe": "latest",
     "through2": "^2.0.1"
   },

@@ -1,14 +1,18 @@
+var fs             = require('fs');
 var defaults       = require('lodash.defaults');
+var flatten        = require('lodash.flatten');
 var createTestCafe = require('testcafe');
 var PluginError    = require('gulp-util').PluginError;
 var through        = require('through2');
+
+var DEFAULT_REPORTER = 'spec';
 
 var DEFAULT_OPTS = {
     browsers:              [],
     filter:                null,
     screenshotsPath:       null,
     takeScreenshotsOnFail: false,
-    reporter:              'spec',
+    reporters:             [],
     skipJsErrors:          false,
     quarantineMode:        false,
     selectorTimeout:       10000,
@@ -21,6 +25,8 @@ module.exports = function gulpTestCafe (opts) {
     var files = [];
 
     opts = defaults({}, opts, DEFAULT_OPTS);
+
+    opts.reporters = flatten([opts.reporters]);
 
     function onFile (file, enc, cb) {
         if (file.isNull())
@@ -45,13 +51,35 @@ module.exports = function gulpTestCafe (opts) {
 
                 var runner = testcafe.createRunner();
 
-                return runner
+                runner
                     .src(files)
                     .browsers(opts.browsers)
                     .filter(opts.filter)
-                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail)
-                    .reporter(opts.reporter, opts.reportOutStream)
-                    .run(opts);
+                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail);
+
+                if (opts.reporter || opts.reportOutStream)
+                    runner.reporter(opts.reporter || DEFAULT_REPORTER, opts.reportOutStream);
+
+                opts.reporters.forEach(function (reporter) {
+                    var outStream = reporter.outStream;
+
+                    if (!outStream && reporter.file)
+                        outStream = fs.createWriteStream(reporter.file);
+
+                    if (typeof reporter !== 'function' && typeof reporter !== 'string') {
+                        if (reporter.factoryFunction)
+                            reporter = reporter.factoryFunction;
+                        else if (reporter.name)
+                            reporter = reporter.name;
+                        else
+                            reporter = DEFAULT_REPORTER;
+                    }
+
+                    runner.reporter(reporter, outStream);
+                });
+
+                return runner.run(opts);
+
             })
             .then(function (failed) {
                 if (failed > 0)
