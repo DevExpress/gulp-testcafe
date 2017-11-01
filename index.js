@@ -66,14 +66,8 @@ module.exports = function gulpTestCafe (opts) {
                     if (!outStream && reporter.file)
                         outStream = fs.createWriteStream(reporter.file);
 
-                    if (typeof reporter !== 'function' && typeof reporter !== 'string') {
-                        if (reporter.factoryFunction)
-                            reporter = reporter.factoryFunction;
-                        else if (reporter.name)
-                            reporter = reporter.name;
-                        else
-                            reporter = DEFAULT_REPORTER;
-                    }
+                    if (typeof reporter !== 'string')
+                        reporter = reporter.name || DEFAULT_REPORTER;
 
                     runner.reporter(reporter, outStream);
                 });

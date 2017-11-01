@@ -52,7 +52,6 @@ Specifies the reporter or an array of reporters.
 Reporter can be specified by reporter name, or an object with following properties: 
 
  * `name` - name of the reporter,
- * `factoryFunction` - a function that creates reporter instance. The `name` will be ignored if `factoryFunction` is specified,
  * `file` - the path to a file where reporter's output will be redirected, 
  * `outStream` - an Writable Stream instance where reporter's output will be piped. The `file` property will be ignored if `outStream` is specified.
 
