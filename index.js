@@ -12,13 +12,10 @@ var DEFAULT_OPTS = {
     filter:                null,
     screenshotsPath:       null,
     takeScreenshotsOnFail: false,
-    reporters:             [],
+    reporter:             [],
     skipJsErrors:          false,
     quarantineMode:        false,
-    selectorTimeout:       10000,
-
-    // NOTE: exposed for testing purposes
-    reportOutStream: null
+    selectorTimeout:       10000
 };
 
 module.exports = function gulpTestCafe (opts) {
@@ -26,7 +23,7 @@ module.exports = function gulpTestCafe (opts) {
 
     opts = defaults({}, opts, DEFAULT_OPTS);
 
-    opts.reporters = flatten([opts.reporters]);
+    opts.reporter = flatten([opts.reporter]);
 
     function onFile (file, enc, cb) {
         if (file.isNull())
@@ -57,10 +54,10 @@ module.exports = function gulpTestCafe (opts) {
                     .filter(opts.filter)
                     .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail);
 
-                if (opts.reporter || opts.reportOutStream)
-                    runner.reporter(opts.reporter || DEFAULT_REPORTER, opts.reportOutStream);
+                if (opts.reportOutStream)
+                    opts.reporter.push({ outStream: opts.reportOutStream });
 
-                opts.reporters.forEach(function (reporter) {
+                opts.reporter.forEach(function (reporter) {
                     var outStream = reporter.outStream;
 
                     if (!outStream && reporter.file)

@@ -18,8 +18,8 @@ it('Should run tests', function () {
     var reportStream = createReportOutStream();
 
     var ps = gulpTestCafe({
-        browsers:  ['chrome', 'firefox'],
-        reporters: { outStream: reportStream }
+        browsers: ['chrome', 'firefox'],
+        reporter: { outStream: reportStream }
     });
 
 
@@ -44,8 +44,8 @@ it('Should fail if tests fail', function () {
     var reportStream = createReportOutStream();
 
     var ps = gulpTestCafe({
-        browsers:        ['chrome'],
-        reportOutStream: reportStream
+        browsers: ['chrome'],
+        reporter: { outStream: reportStream }
     });
 
     var resultsPromise = Promise.race([
@@ -98,8 +98,8 @@ it('Should use multiple reporters', function () {
     var reportStream2 = createReportOutStream();
 
     var ps = gulpTestCafe({
-        browsers:  ['chrome', 'firefox'],
-        reporters: [{ outStream: reportStream1 }, { name: 'json', outStream: reportStream2 }]
+        browsers: ['chrome', 'firefox'],
+        reporter: [{ outStream: reportStream1 }, { name: 'json', outStream: reportStream2 }]
     });
 
     var resultsPromise = Promise.race([
