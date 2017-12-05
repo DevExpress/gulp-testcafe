@@ -55,15 +55,14 @@ module.exports = function gulpTestCafe (opts) {
                     .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail);
 
                 opts.reporter.forEach(function (reporter) {
-                    var outStream = reporter.outStream;
-
-                    if (!outStream && reporter.file)
-                        outStream = fs.createWriteStream(reporter.file);
-
-                    if (typeof reporter !== 'string')
-                        reporter = reporter.name || DEFAULT_REPORTER;
-
-                    runner.reporter(reporter, outStream);
+                    if (typeof reporter === 'string')
+                        runner.reporter(reporter);
+                    else {
+                        runner.reporter(
+                            reporter.name || DEFAULT_REPORTER, 
+                            reporter.file ? fs.createWriteStream(reporter.file) : reporter.outStream
+                        );
+                    }
                 });
 
                 return runner.run(opts);
