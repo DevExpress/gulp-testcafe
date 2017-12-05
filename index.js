@@ -54,9 +54,6 @@ module.exports = function gulpTestCafe (opts) {
                     .filter(opts.filter)
                     .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail);
 
-                if (opts.reportOutStream)
-                    opts.reporter.push({ outStream: opts.reportOutStream });
-
                 opts.reporter.forEach(function (reporter) {
                     var outStream = reporter.outStream;
 
