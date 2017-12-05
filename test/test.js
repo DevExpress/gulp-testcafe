@@ -18,8 +18,8 @@ it('Should run tests', function () {
     var reportStream = createReportOutStream();
 
     var ps = gulpTestCafe({
-        browsers:        ['chrome', 'firefox'],
-        reportOutStream: reportStream
+        browsers: ['chrome', 'firefox'],
+        reporter: { outStream: reportStream }
     });
 
 
@@ -44,8 +44,8 @@ it('Should fail if tests fail', function () {
     var reportStream = createReportOutStream();
 
     var ps = gulpTestCafe({
-        browsers:        ['chrome'],
-        reportOutStream: reportStream
+        browsers: ['chrome'],
+        reporter: { outStream: reportStream }
     });
 
     var resultsPromise = Promise.race([
@@ -71,9 +71,8 @@ it('Should fail if configuration is incorrect', function () {
     var reportStream = createReportOutStream();
 
     var ps = gulpTestCafe({
-        browsers:        ['chrome'],
-        reporter:        'unknown',
-        reportOutStream: reportStream
+        browsers: ['chrome'],
+        reporter: { name: 'unknown', outStream: reportStream },
     });
 
     var resultsPromise = Promise.race([
@@ -88,6 +87,36 @@ it('Should fail if configuration is incorrect', function () {
     ]);
 
     ps.write(vinylFile.readSync('test/fixtures/passing1.js'));
+    ps.end();
+
+    return resultsPromise;
+});
+
+it('Should use multiple reporters', function () {
+    var reportStream1 = createReportOutStream();
+    var reportStream2 = createReportOutStream();
+
+    var ps = gulpTestCafe({
+        browsers: ['chrome', 'firefox'],
+        reporter: [{ outStream: reportStream1 }, { name: 'json', outStream: reportStream2 }]
+    });
+
+    var resultsPromise = Promise.race([
+        promisifyEvent(ps, 'error'),
+
+        promisifyEvent(ps, 'done').then(function () {
+            expect(reportStream1.data).contains('Chrome');
+            expect(reportStream1.data).contains('Firefox');
+            expect(reportStream1.data).contains('3 passed');
+
+            expect(reportStream2.data).contains('Chrome');
+            expect(reportStream2.data).contains('Firefox');
+            expect(reportStream2.data).contains('"passed": 3');
+        })
+    ]);
+
+    ps.write(vinylFile.readSync('test/fixtures/passing1.js'));
+    ps.write(vinylFile.readSync('test/fixtures/passing2.js'));
     ps.end();
 
     return resultsPromise;

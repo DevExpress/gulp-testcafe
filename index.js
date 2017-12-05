@@ -1,26 +1,29 @@
+var fs             = require('fs');
 var defaults       = require('lodash.defaults');
+var flatten        = require('lodash.flatten');
 var createTestCafe = require('testcafe');
 var PluginError    = require('gulp-util').PluginError;
 var through        = require('through2');
+
+var DEFAULT_REPORTER = 'spec';
 
 var DEFAULT_OPTS = {
     browsers:              [],
     filter:                null,
     screenshotsPath:       null,
     takeScreenshotsOnFail: false,
-    reporter:              'spec',
+    reporter:             [],
     skipJsErrors:          false,
     quarantineMode:        false,
-    selectorTimeout:       10000,
-
-    // NOTE: exposed for testing purposes
-    reportOutStream: null
+    selectorTimeout:       10000
 };
 
 module.exports = function gulpTestCafe (opts) {
     var files = [];
 
     opts = defaults({}, opts, DEFAULT_OPTS);
+
+    opts.reporter = flatten([opts.reporter]);
 
     function onFile (file, enc, cb) {
         if (file.isNull())
@@ -45,13 +48,25 @@ module.exports = function gulpTestCafe (opts) {
 
                 var runner = testcafe.createRunner();
 
-                return runner
+                runner
                     .src(files)
                     .browsers(opts.browsers)
                     .filter(opts.filter)
-                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail)
-                    .reporter(opts.reporter, opts.reportOutStream)
-                    .run(opts);
+                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail);
+
+                opts.reporter.forEach(function (reporter) {
+                    if (typeof reporter === 'string')
+                        runner.reporter(reporter);
+                    else {
+                        runner.reporter(
+                            reporter.name || DEFAULT_REPORTER, 
+                            reporter.file ? fs.createWriteStream(reporter.file) : reporter.outStream
+                        );
+                    }
+                });
+
+                return runner.run(opts);
+
             })
             .then(function (failed) {
                 if (failed > 0)
