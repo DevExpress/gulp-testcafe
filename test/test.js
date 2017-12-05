@@ -71,8 +71,8 @@ it('Should fail if configuration is incorrect', function () {
     var reportStream = createReportOutStream();
 
     var ps = gulpTestCafe({
-        browsers:        ['chrome'],
-        reporter:        { name: 'unknown', outStream: reportStream },
+        browsers: ['chrome'],
+        reporter: { name: 'unknown', outStream: reportStream },
     });
 
     var resultsPromise = Promise.race([
