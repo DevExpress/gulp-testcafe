@@ -12,10 +12,21 @@ var DEFAULT_OPTS = {
     filter:                null,
     screenshotsPath:       null,
     takeScreenshotsOnFail: false,
-    reporter:             [],
+    reporter:              [],
     skipJsErrors:          false,
     quarantineMode:        false,
-    selectorTimeout:       10000
+    assertionTimeout:      3000,
+    pageLoadTimeout:       3000,
+    selectorTimeout:       10000,
+    proxy:                 '',
+    hostname:              '',
+    ports:                 [],
+    speed:                 1,
+    concurrency:           0,
+    app:                   '',
+    appInitDelay:          1000,
+    debugMode:             false,
+    debugOnFail:           false
 };
 
 module.exports = function gulpTestCafe (opts) {
@@ -42,7 +53,7 @@ module.exports = function gulpTestCafe (opts) {
         var stream   = this;
         var testcafe = null;
 
-        createTestCafe()
+        createTestCafe(opts.hostname, opts.ports[0], opts.ports[1])
             .then(function (tc) {
                 testcafe = tc;
 
@@ -59,11 +70,20 @@ module.exports = function gulpTestCafe (opts) {
                         runner.reporter(reporter);
                     else {
                         runner.reporter(
-                            reporter.name || DEFAULT_REPORTER, 
+                            reporter.name || DEFAULT_REPORTER,
                             reporter.file ? fs.createWriteStream(reporter.file) : reporter.outStream
                         );
                     }
                 });
+
+                if (opts.concurrency)
+                    runner.concurrency(opts.concurrency);
+
+                if (opts.app)
+                    runner.startApp(opts.app, opts.appInitDelay);
+
+                if (opts.proxy)
+                    runner.useProxy(opts.proxy);
 
                 return runner.run(opts);
 

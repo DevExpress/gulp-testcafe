@@ -1,6 +1,6 @@
 {
   "name": "gulp-testcafe",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Run TestCafe tests using Gulp.",
   "main": "index.js",
   "directories": {
