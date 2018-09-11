@@ -39,7 +39,7 @@ testcafe(options)
 
 Configures the test runner to run tests in the specified browsers.
 
-#### reporters
+#### reporter
 
 *Type*: `String` || `Array`
 
@@ -57,13 +57,16 @@ Reporter can be specified by reporter name, or an object with following properti
 
 Examples:
 ```js
-  "reporters": "minimal"
+  "reporter": "minimal"
 ```
 ```js
-   "reporters": { "name": "json", "file": "report.json" }
+   "reporter": { "name": "json", "file": "report.json" }
  ```
 ```js
-    "reporters": { "name": "xunit", "outStream": fs.createWriteStream("report.xml") }
+    "reporter": { "name": "xunit", "outStream": fs.createWriteStream("report.xml") }
+```
+```js
+    "reporter": ["spec", { "name": "xunit", "outStream": fs.createWriteStream("report.xml") }]
 ```
 #### filter
 
