@@ -52,7 +52,7 @@ Specifies the reporter or an array of reporters.
 Reporter can be specified by reporter name, or an object with following properties: 
 
  * `name` - name of the reporter,
- * `output` - the file path where the report is written or the output stream, 
+ * `output` - the file path where the report is written or the output stream. 
  
 Examples:
 ```js
