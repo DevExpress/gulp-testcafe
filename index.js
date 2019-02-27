@@ -67,14 +67,12 @@ module.exports = function gulpTestCafe (opts) {
 
                 opts.reporter.forEach(function (reporter) {
                     if (typeof reporter === 'string')
-                        runner.reporter(reporter);
-                    else {
-                        runner.reporter(
-                            reporter.name || DEFAULT_REPORTER,
-                            reporter.file ? fs.createWriteStream(reporter.file) : reporter.outStream
-                        );
-                    }
+                        return;
+
+                    reporter.name = reporter.name || DEFAULT_REPORTER;
                 });
+
+                runner.reporter(opts.reporter);
 
                 if (opts.concurrency)
                     runner.concurrency(opts.concurrency);
