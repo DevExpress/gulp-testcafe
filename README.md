@@ -52,21 +52,20 @@ Specifies the reporter or an array of reporters.
 Reporter can be specified by reporter name, or an object with following properties: 
 
  * `name` - name of the reporter,
- * `file` - the path to a file where reporter's output will be redirected, 
- * `outStream` - an Writable Stream instance where reporter's output will be piped. The `file` property will be ignored if `outStream` is specified.
-
+ * `output` - the file path where the report is written or the output stream. 
+ 
 Examples:
 ```js
   "reporter": "minimal"
 ```
 ```js
-   "reporter": { "name": "json", "file": "report.json" }
+   "reporter": { "name": "json", "output": "report.json" }
  ```
 ```js
-    "reporter": { "name": "xunit", "outStream": fs.createWriteStream("report.xml") }
+    "reporter": { "name": "xunit", "output": fs.createWriteStream("report.xml") }
 ```
 ```js
-    "reporter": ["spec", { "name": "xunit", "outStream": fs.createWriteStream("report.xml") }]
+    "reporter": ["spec", { "name": "xunit", "output": fs.createWriteStream("report.xml") }]
 ```
 #### filter
 
