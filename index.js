@@ -29,12 +29,22 @@ var DEFAULT_OPTS = {
     debugOnFail:           false
 };
 
+function prepareReporters (reporters) {
+    reporters = flatten(reporters);
+
+    reporters.forEach(function (reporter) {
+        if (typeof reporter !== 'string')
+            reporter.name = reporter.name || DEFAULT_REPORTER;
+    });
+
+    return reporters;
+}
+
 module.exports = function gulpTestCafe (opts) {
     var files = [];
 
-    opts = defaults({}, opts, DEFAULT_OPTS);
-
-    opts.reporter = flatten([opts.reporter]);
+    opts          = defaults({}, opts, DEFAULT_OPTS);
+    opts.reporter = prepareReporters([opts.reporter]);
 
     function onFile (file, enc, cb) {
         if (file.isNull())
@@ -63,16 +73,8 @@ module.exports = function gulpTestCafe (opts) {
                     .src(files)
                     .browsers(opts.browsers)
                     .filter(opts.filter)
-                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail);
-
-                opts.reporter.forEach(function (reporter) {
-                    if (typeof reporter === 'string')
-                        return;
-
-                    reporter.name = reporter.name || DEFAULT_REPORTER;
-                });
-
-                runner.reporter(opts.reporter);
+                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail)
+                    .reporter(opts.reporter);
 
                 if (opts.concurrency)
                     runner.concurrency(opts.concurrency);
