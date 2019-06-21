@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.5.0",
+    "eslint": "4.18.2",
     "mocha": "^3.0.2",
     "promisify-event": "^1.0.0",
     "publish-please": "^2.2.0",
