@@ -76,8 +76,6 @@ module.exports = function gulpTestCafe (opts) {
                     .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail)
                     .reporter(opts.reporter);
 
-                runner.reporter(opts.reporter);
-
                 if (opts.concurrency)
                     runner.concurrency(opts.concurrency);
 
