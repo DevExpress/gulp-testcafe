@@ -22,7 +22,7 @@ var DEFAULT_OPTS = {
     hostname:              '',
     ports:                 [],
     speed:                 1,
-    concurrency:           0,
+    concurrency:           1,
     app:                   '',
     appInitDelay:          1000,
     debugMode:             false,
