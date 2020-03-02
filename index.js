@@ -2,7 +2,7 @@ var fs             = require('fs');
 var defaults       = require('lodash.defaults');
 var flatten        = require('lodash.flatten');
 var createTestCafe = require('testcafe');
-var PluginError    = require('gulp-util').PluginError;
+var PluginError    = require('plugin-error');
 var through        = require('through2');
 
 var DEFAULT_REPORTER = 'spec';
