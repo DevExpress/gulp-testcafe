@@ -12,6 +12,7 @@ var DEFAULT_OPTS = {
     filter:                null,
     screenshotsPath:       null,
     takeScreenshotsOnFail: false,
+    pathPattern:           '${DATE}_${TIME}/${TEST_ID}/${RUN_ID}/${USERAGENT}/${FILE_INDEX}.png',
     reporter:              [],
     skipJsErrors:          false,
     quarantineMode:        false,
@@ -73,7 +74,7 @@ module.exports = function gulpTestCafe (opts) {
                     .src(files)
                     .browsers(opts.browsers)
                     .filter(opts.filter)
-                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail)
+                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail, opts.pathPattern)
                     .reporter(opts.reporter);
 
                 if (opts.concurrency)
