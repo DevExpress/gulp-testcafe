@@ -12,7 +12,7 @@ var DEFAULT_OPTS = {
     filter:                null,
     screenshotsPath:       null,
     takeScreenshotsOnFail: false,
-    pathPattern:           '${DATE}_${TIME}/${TEST_ID}/${RUN_ID}/${USERAGENT}/${FILE_INDEX}.png',
+    pathPattern:           null,
     reporter:              [],
     skipJsErrors:          false,
     quarantineMode:        false,
