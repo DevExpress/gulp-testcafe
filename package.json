@@ -53,6 +53,7 @@
   "dependencies": {
     "lodash.flatten": "^4.4.0",
     "plugin-error": "^1.0.1",
+    "sinon": "^9.0.2",
     "testcafe": "latest",
     "through2": "^2.0.1"
   },
