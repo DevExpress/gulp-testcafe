@@ -1,5 +1,5 @@
 var expect         = require('chai').expect;
-var stub = require('sinon').stub;
+var stub           = require('sinon').stub;
 var vinylFile      = require('vinyl-file');
 var promisifyEvent = require('promisify-event');
 var gulpTestCafe   = require('../');
