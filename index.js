@@ -1,33 +1,9 @@
-var fs             = require('fs');
-var defaults       = require('lodash.defaults');
 var flatten        = require('lodash.flatten');
 var createTestCafe = require('testcafe');
 var PluginError    = require('plugin-error');
 var through        = require('through2');
 
 var DEFAULT_REPORTER = 'spec';
-
-var DEFAULT_OPTS = {
-    browsers:              [],
-    filter:                null,
-    screenshotsPath:       null,
-    takeScreenshotsOnFail: false,
-    reporter:              [],
-    skipJsErrors:          false,
-    quarantineMode:        false,
-    assertionTimeout:      3000,
-    pageLoadTimeout:       3000,
-    selectorTimeout:       10000,
-    proxy:                 '',
-    hostname:              '',
-    ports:                 [],
-    speed:                 1,
-    concurrency:           1,
-    app:                   '',
-    appInitDelay:          1000,
-    debugMode:             false,
-    debugOnFail:           false
-};
 
 function prepareReporters (reporters) {
     reporters = flatten(reporters);
@@ -41,10 +17,8 @@ function prepareReporters (reporters) {
 }
 
 module.exports = function gulpTestCafe (opts) {
-    var files = [];
-
-    opts          = defaults({}, opts, DEFAULT_OPTS);
     opts.reporter = prepareReporters([opts.reporter]);
+    opts.src      = [];
 
     function onFile (file, enc, cb) {
         if (file.isNull())
@@ -54,7 +28,7 @@ module.exports = function gulpTestCafe (opts) {
             cb(new PluginError('gulp-testcafe', 'Streaming is not supported.'));
 
         else {
-            files.push(file.path);
+            opts.src.push(file.path);
             cb(null, file);
         }
     }
@@ -63,30 +37,13 @@ module.exports = function gulpTestCafe (opts) {
         var stream   = this;
         var testcafe = null;
 
-        createTestCafe(opts.hostname, opts.ports[0], opts.ports[1])
+        createTestCafe(opts)
             .then(function (tc) {
                 testcafe = tc;
 
                 var runner = testcafe.createRunner();
 
-                runner
-                    .src(files)
-                    .browsers(opts.browsers)
-                    .filter(opts.filter)
-                    .screenshots(opts.screenshotsPath, opts.takeScreenshotsOnFail)
-                    .reporter(opts.reporter);
-
-                if (opts.concurrency)
-                    runner.concurrency(opts.concurrency);
-
-                if (opts.app)
-                    runner.startApp(opts.app, opts.appInitDelay);
-
-                if (opts.proxy)
-                    runner.useProxy(opts.proxy);
-
                 return runner.run(opts);
-
             })
             .then(function (failed) {
                 if (failed > 0)

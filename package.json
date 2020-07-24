@@ -51,9 +51,9 @@
   },
   "homepage": "https://github.com/DevExpress/gulp-testcafe#readme",
   "dependencies": {
-    "lodash.defaults": "^4.2.0",
     "lodash.flatten": "^4.4.0",
     "plugin-error": "^1.0.1",
+    "sinon": "^9.0.2",
     "testcafe": "latest",
     "through2": "^2.0.1"
   },
