@@ -1,14 +1,17 @@
-# gulp-testcafe
+# DEPREDCATED
+The TestCafe team no longer maintains the `gulp-testcafe` repository. If you want to take over the project, we'll be happy to hand it over. To contact the team, create a new GitHub issue or email support@devexpress.com.
+
+## gulp-testcafe
 [![Build status](https://ci.appveyor.com/api/projects/status/gvjohww3gs65m36j?svg=true)](https://ci.appveyor.com/project/DevExpress/gulp-testcafe)
 
 *Run TestCafe tests using Gulp.*
 
-## Install
+### Install
 ```sh
 npm install --save-dev gulp-testcafe
 ```
 
-## Usage
+### Usage
 ```js
 const gulp     = require('gulp');
 const testcafe = require('gulp-testcafe');
@@ -19,14 +22,14 @@ gulp.task('default', () => {
 });
 ```
 
-## API
+### API
 ```js
 testcafe(options)
 ```
 
-### Options
+#### Options
 
-#### browsers
+##### browsers
 
 
 *Type*: `Array`
@@ -39,7 +42,7 @@ testcafe(options)
 
 Configures the test runner to run tests in the specified browsers.
 
-#### reporter
+##### reporter
 
 *Type*: `String` || `Array`
 
@@ -67,7 +70,7 @@ Examples:
 ```js
     "reporter": ["spec", { "name": "xunit", "output": fs.createWriteStream("report.xml") }]
 ```
-#### filter
+##### filter
 
 *Type*: `function(testName, fixtureName, fixturePath)`
 
@@ -77,7 +80,7 @@ Examples:
 
 Allows you to manually select which tests should be run.
 
-#### screenshotsPath
+##### screenshotsPath
 
 *Type*: `String`
 
@@ -87,7 +90,7 @@ Allows you to manually select which tests should be run.
 
 The path to which the screenshots will be saved. Enables the test runner to take screenshots of the tested webpages.
 
-#### takeScreenshotsOnFail
+##### takeScreenshotsOnFail
 
 *Type*: `Boolean`
 
@@ -97,7 +100,7 @@ The path to which the screenshots will be saved. Enables the test runner to take
 
 Specifies if screenshots should be taken automatically whenever a test fails. Requires that the [screenshotsPath](#screenshotsPath) is set.
 
-#### skipJsErrors
+##### skipJsErrors
 
 *Type*: `Boolean`
 
@@ -107,7 +110,7 @@ Specifies if screenshots should be taken automatically whenever a test fails. Re
 
 Defines whether to continue running a test after a JavaScript error occurs on a page (`true`), or consider such a test failed (`false`).
 
-#### quarantineMode
+##### quarantineMode
 
 *Type*: `Boolean`
 
@@ -115,7 +118,7 @@ Defines whether to continue running a test after a JavaScript error occurs on a 
 
 Defines whether to enable the [quarantine mode](https://devexpress.github.io/testcafe/documentation/using-testcafe/programming-interface/runner.html#quarantine-mode).
 
-#### selectorTimeout
+##### selectorTimeout
 
 *Type*: `Number`
 
@@ -125,5 +128,5 @@ Defines whether to enable the [quarantine mode](https://devexpress.github.io/tes
 
 Specifies the amount of time, in milliseconds, within which [selectors](https://devexpress.github.io/testcafe/documentation/test-api/selecting-page-elements/selectors.html) make attempts to obtain a node to be returned.
 
-## Author
+### Author
 Developer Express Inc. ([https://devexpress.com](https://devexpress.com))
