@@ -1,5 +1,5 @@
 # DEPREDCATED
-The TestCafe team no longer maintains the `gulp-testcafe` repository. If you want to take over the project, we'll be happy to hand it over. To contact the team, create a new GitHub issue or email support@devexpress.com.
+The TestCafe team no longer maintains the `gulp-testcafe` repository. If you want to take over the project, we'll be happy to hand it over. To contact the team, create a new GitHub issue.
 
 ## gulp-testcafe
 [![Build status](https://ci.appveyor.com/api/projects/status/gvjohww3gs65m36j?svg=true)](https://ci.appveyor.com/project/DevExpress/gulp-testcafe)
